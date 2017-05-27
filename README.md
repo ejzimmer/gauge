@@ -1,3 +1,4 @@
-Build: node run build
-Run: node index.js
-See: localhost:
+npm install
+node run build
+node index.js
+http://localhost:3000/index.html
