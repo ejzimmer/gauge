@@ -1,0 +1,20 @@
+{
+  "name": "dials",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "browserify index.js -o app.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.15.3",
+    "rxjs": "^5.4.0",
+    "rxjs-es": "^5.0.0-beta.12",
+    "url": "^0.11.0"
+  },
+  "devDependencies": {
+    "browserify": "^14.3.0"
+  }
+}
