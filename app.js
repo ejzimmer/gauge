@@ -3,20 +3,26 @@ const Rx = require('rxjs');
 
 const events = new EventSource('subscribe');
 
-Rx.Observable.fromEvent(events, 'message')
-.map(event => event.data)
-.subscribe(data => {
-  console.log(data)
-});
+const getValue = event => Number.parseFloat(JSON.parse(event.data));
+const getAngle = number => 180 * number;
 
- 
-events.onmessage = function (event) {
-  const value = Number.parseFloat(JSON.parse(event.data));
-  const angle = 180 * value;
-
-  document.getElementById('gauge-dial').style.transform = `rotate(${angle}deg)`;
+const updateDial = (dial, angle) => {
+  document.querySelector(`#${dial} .gauge-dial`).style.transform = `rotate(${angle}deg`;
 }
 
+Rx.Observable.fromEvent(events, 'message')
+.map(getValue)
+.map(getAngle)
+.subscribe(angle => updateDial('instant', angle));
+
+let count = 0;
+Rx.Observable.fromEvent(events, 'message')
+.map(getValue)
+.scan((average, current) => (average * count + current)/++count, 0)
+.map(getAngle)
+.subscribe(angle => {
+  updateDial('average', angle);
+});
 },{"rxjs":10}],2:[function(require,module,exports){
 "use strict";
 var __extends = (this && this.__extends) || function (d, b) {
